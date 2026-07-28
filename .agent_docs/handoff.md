@@ -9,7 +9,7 @@
 - `templates/` — fully populated reference templates (`chapter-notes-template.md`, `interview-prep-template.md`, `section-index-template.md`, `capstone-template.md`, `authoring-guidelines.md`, `README.md`). Never edit these originals — copy their structure into target files.
 - 5 numbered section folders (`01-`–`05-`), each with 2–3 chapter subfolders. Every chapter folder has topic notes (`01-*.md`–`03-*.md`, or `01`–`04` for the one dense chapter) plus an `interview-prep.md` numbered immediately after the last topic note.
 - `capstone/project-brief.md` — integrative multi-agent platform design project.
-- Section 01 (`01-classical-systems-refresher/`) is now **fully authored** (9 files). All other section content files remain blank stubs (`<!-- stub: populate using templates/ -->`).
+- **Sections 01, 02, and 05 are now fully authored.** Sections 03 (`03-agentic-and-multi-agent-systems/`) and 04 (`04-production-ai-systems-security-eval-scale/`) content files remain blank stubs (`<!-- stub: populate using templates/ -->`).
 
 **Architecture:** Section → Chapter (two levels only, no module layer). Sections ramp: 01 classical systems refresher (light) → 02 LLM serving/RAG → 03 agentic/multi-agent (LangGraph) → 04 production concerns (OWASP security, eval, scaling) → 05 interview practice (delivery framework, worked case studies mapped to the user's real IBM projects, mock question banks). Filenames are **locked** — real topic-specific kebab-case slugs were chosen deliberately since chapters may forward-link to not-yet-written stubs.
 
@@ -20,12 +20,12 @@
 ## Session Log
 
 ### Session: 2026-07-29 (current)
-**Files touched (all under `01-classical-systems-refresher/`, uncommitted working-tree changes):**
-- `README.md` (section index)
-- `01-scalability-and-distributed-systems-primer/` — `01-scalability-load-balancing-and-caching.md`, `02-consistency-availability-and-the-cap-theorem.md`, `03-message-queues-and-asynchronous-processing.md`, `04-interview-prep.md`
-- `02-apis-databases-and-data-platforms-for-ai/` — `01-rest-and-fastapi-service-design-for-ai-systems.md`, `02-relational-vs-nosql-vs-vector-storage-tradeoffs.md`, `03-etl-pipelines-and-data-platforms-at-scale.md`, `04-interview-prep.md`
-**Summary:** Populated the entire `01-classical-systems-refresher` section using an orchestrator + subagent workflow (agent acted as orchestrator; all authoring delegated to `general` subagents, which invoked the `author-chapter` skill). Authored 6 topic notes (each full `chapter-notes-template.md` with ELI5, Visual Overview, per-concept what/how/where, Key Parameters table, 5-step Worked Example, anti-pattern + fix, 3-part pitfalls, 5 Self-Check Qs incl. multi-select, verified official-doc Further Reading), 2 interview-prep files grounded in the authored notes (7 conceptual + 2 scenario + 1 design Q each), and the section README (5 hrs estimated, 2-chapter table). One subagent (scalability) initially returned a research brief for approval; it was resumed via `task_id` to complete the write and passed its quality gate.
-**Outcome:** All 9 files in section 01 populated and verified (zero stub markers remain; every Further Reading link verified live with webfetch). Changes are **uncommitted** in the working tree — not yet committed to git.
+**Files touched:**
+- `05-interview-practice-case-studies-and-drills/` (14 files): section `README.md`; `01-delivery-framework-for-ai-system-design-interviews/` — 3 topic notes (`01`–`03`) + `04-interview-prep.md`; `02-worked-case-studies-from-production-agentic-systems/` — 4 case studies (`01`–`04`) + `05-interview-prep.md`; `03-rapid-fire-mock-question-bank-and-self-assessment/` — 3 mock banks (`01`–`03`) + `04-interview-prep.md`.
+- Also authored earlier the same date and already committed (`04475b3`): all of `01-classical-systems-refresher/` (9 files) and `02-llm-serving-and-rag-architecture/` (13 files).
+- `.agent_docs/handoff.md`.
+**Summary:** Populated all of section 05 (Interview Practice) via the orchestrator + subagent workflow — agent orchestrated only; 14 `general` subagents did all authoring, each told to write in-run. Per two user decisions this run: (1) Ch2 case studies are realistic reconstructions from the filename slugs with NO fabricated proprietary/IBM-internal specifics; (2) custom structures per file type — Ch1 delivery notes use the standard chapter-notes template, Ch2 uses a case-study walkthrough structure (Prompt → Requirements → Architecture → Decisions/Tradeoffs → Deep Dive → Failure Modes → Implementation Sketch → 45-min delivery plan → Q&A drill → Definitions → Further Reading), Ch3 uses a Q-bank format (~24 Qs each: recall/applied/analysis/MCQ rounds + self-assessment scorecard). All Further Reading verified live via webfetch (Hello Interview, Anthropic, OWASP LLM Top 10:2025, LangGraph/LangChain, PostgreSQL RLS/roles, Ragas, pgvector/FAISS/Sentence-Transformers). Earlier the same date, sections 01 and 02 were authored via the identical workflow and committed as `04475b3`.
+**Outcome:** Sections 01, 02, and 05 authored and verified (zero stub markers remain). Sections 01+02 are committed (`04475b3`); **section 05's 14 files are uncommitted** in the working tree.
 
 ### Session: 2026-07-28 (previous)
 **Files touched:** Full repo scaffold — `AGENTS.md`, `README.md`, `templates/` (6 files), `00-roadmap/learning-roadmap.md`, `progress-tracker.md`, `capstone/project-brief.md`, all 5 section `README.md` stubs, and 14 chapter folders across `01-classical-systems-refresher/` through `05-interview-practice-case-studies-and-drills/` (43 topic-note stubs + 14 interview-prep stubs).
@@ -36,9 +36,10 @@
 
 ## Open Items / Next Steps
 
-- [ ] Section 01 authored content is **uncommitted** — the 9 modified files under `01-classical-systems-refresher/` need to be committed to git (user has not yet requested a commit).
+- [ ] Section 05 authored content is **uncommitted** — the 14 modified files under `05-interview-practice-case-studies-and-drills/` (plus `.agent_docs/handoff.md`) need to be committed to git (user has not yet requested a commit).
+- [ ] `05-.../03-rapid-fire-mock-question-bank-and-self-assessment/02-mock-question-bank-multi-agent-and-orchestration.md` and `.../03-mock-question-bank-security-eval-and-scaling.md` — these were grounded in official docs because their source sections (03 and 04) were still stubs; revisit for consistency once sections 03 and 04 are authored.
 
-Suggested (not blocking) next authoring target for a future session: begin section `02-llm-serving-and-rag-architecture/`, starting with `01-llm-inference-and-serving-economics/01-llm-inference-fundamentals-latency-and-throughput.md`, using the same orchestrator + `author-chapter` subagent workflow.
+Suggested (not blocking) next authoring target: section `03-agentic-and-multi-agent-systems/`, starting with `01-agent-design-patterns/01-react-and-tool-calling-agent-fundamentals.md`, using the same orchestrator + `author-chapter` subagent workflow. This section is LangGraph-heavy — subagents must verify LangGraph API details against current official docs (per AGENTS.md). Sections 03 and 04 are the only remaining unauthored content.
 
 ---
 
@@ -48,15 +49,16 @@ Suggested (not blocking) next authoring target for a future session: begin secti
 - **Authoring source of truth:** `AGENTS.md` at repo root — read before populating any stub.
 - **Template files (reference-only, never edit):** `templates/chapter-notes-template.md`, `templates/interview-prep-template.md`, `templates/section-index-template.md`, `templates/capstone-template.md`, `templates/authoring-guidelines.md`.
 - **Stub marker:** unpopulated files contain exactly `<!-- stub: populate using templates/ -->` — intentional, not missing content.
-- **Skills for authoring:** `author-chapter` (researches live sources, follows `chapter-notes-template.md` + Content Depth Rules 1–9, runs a quality gate); `generate-practice-exam` (only after chapters are authored — grounds questions in existing content).
-- **Orchestrator pattern that worked this session:** delegate one file per `general` subagent; pass the exact target path, the topic framing, and the mandatory template/section requirements; run subagents in parallel. If a subagent stops to ask for approval, resume it with its `task_id`.
-- **Chapter file numbering:** topic notes `01`–`03` (or `01`–`04` for the dense chapter `05-.../02-worked-case-studies-.../`); interview-prep is always the number immediately after the last topic note (`04` or `05`).
+- **Skills for authoring:** `author-chapter` (researches live sources, follows `chapter-notes-template.md` + Content Depth Rules 1–9, runs a quality gate); `generate-practice-exam` (grounds questions in authored content only).
+- **Orchestrator pattern that works:** delegate one file per `general` subagent; pass the exact target path, topic framing, and mandatory template/section requirements; run subagents in parallel; explicitly instruct each subagent to WRITE in-run (do not stop for approval). If one stops to ask, resume it with its `task_id`.
+- **Custom file structures used in section 05:** delivery-framework notes = standard chapter-notes template; worked case studies = case-study walkthrough (Prompt→Requirements→Architecture→Decisions→Deep Dive→Failure Modes→Implementation Sketch→45-min plan→Q&A→Definitions→Further Reading); mock banks = Q-bank (~24 Qs, recall/applied/analysis/MCQ rounds + scorecard). All still obey AGENTS.md style + depth spirit.
+- **Chapter file numbering:** topic notes `01`–`03` (or `01`–`04` for the dense chapter `05-.../02-worked-case-studies-.../`); interview-prep is always the number immediately after the last topic note (`04`, or `05` for the dense chapter).
 - **Filenames are locked** — never rename/renumber; chapters may forward-link to stubs not yet written.
 - **Section structure:** Section → Chapter only (no module layer).
-- **5 sections:** `01-classical-systems-refresher/` (**fully authored**), `02-llm-serving-and-rag-architecture/`, `03-agentic-and-multi-agent-systems/`, `04-production-ai-systems-security-eval-scale/`, `05-interview-practice-case-studies-and-drills/`.
-- **Dense chapter:** `05-.../02-worked-case-studies-from-production-agentic-systems/` has 4 topic notes (user's real IBM projects: document extraction/dispatch, self-service analytics/RBAC, conversational analytics/NL-to-SQL, employee query routing) + `05-interview-prep.md`.
+- **5 sections:** `01-classical-systems-refresher/` (**authored**), `02-llm-serving-and-rag-architecture/` (**authored**), `03-agentic-and-multi-agent-systems/` (stubs), `04-production-ai-systems-security-eval-scale/` (stubs), `05-interview-practice-case-studies-and-drills/` (**authored**).
+- **Dense chapter:** `05-.../02-worked-case-studies-from-production-agentic-systems/` has 4 case-study notes (topics: document extraction/dispatch, self-service analytics/RBAC, conversational analytics/NL-to-SQL, employee query routing) + `05-interview-prep.md`.
 - **No labs, no thought-leadership files** — only topic notes + interview-prep per chapter.
-- **Markdown style:** H1 title, H2 major sections, H3 sub-sections; all code blocks carry a language tag; `---` separates major sections; Self-Check answers use `<details><summary>Answer</summary>`.
-- **External links rule:** official documentation only, verified with `webfetch`, format `[Title](url) — *verified YYYY-MM-DD*`.
-- **Git:** repo git-initialized; scaffold committed as `5d54117`. Section 01 authored content is currently **uncommitted** in the working tree. Untracked: `.agent_docs/`, `06-interview-questions-dump/`.
+- **Markdown style:** H1 title, H2 major sections, H3 sub-sections; all code blocks carry a language tag; `---` separates major sections; Self-Check / drill answers use `<details><summary>Answer</summary>`.
+- **External links rule:** official/authoritative documentation only, verified with `webfetch`, format `[Title](url) — *verified YYYY-MM-DD*`. No Medium/YouTube.
+- **Git:** commits so far — `f15e3ea` initial, `5d54117` scaffold, `04475b3` sections 01+02 content + handoff. Section 05 content is currently **uncommitted**. Note: `06-interview-questions-dump/question1.md` is a tracked empty placeholder outside the numbered curriculum.
 - **Verify no stubs remain in a folder:** `grep -rl "stub: populate" <folder>/` should return nothing.
